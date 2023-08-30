@@ -6,7 +6,7 @@
 Welcome to this Firehose chain reader pod, common commands:
  - Show version                       fireacme --version
 
-Node manager commands (acme-... <tab> to show all):
+Node manager commands (astar-... <tab> to show all):
  - Check if running                   reader-is-running
 
  - Start or restart instance          reader-resume

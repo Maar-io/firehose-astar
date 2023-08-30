@@ -1,4 +1,4 @@
-module github.com/streamingfast/firehose-acme
+module github.com/Maar-io/firehose-astar
 
 go 1.20
 

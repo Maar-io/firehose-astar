@@ -1,17 +1,17 @@
 package main
 
 import (
-	"github.com/streamingfast/firehose-acme/codec"
-	pbacme "github.com/streamingfast/firehose-acme/pb/sf/acme/type/v1"
+	"github.com/Maar-io/firehose-astar/codec"
+	pbacme "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
 	firecore "github.com/streamingfast/firehose-core"
 )
 
 func main() {
 	firecore.Main(&firecore.Chain[*pbacme.Block]{
-		ShortName:            "acme",
-		LongName:             "Acme",
+		ShortName:            "astar",
+		LongName:             "Astar",
 		ExecutableName:       "dummy-blockchain",
-		FullyQualifiedModule: "github.com/streamingfast/firehose-acme",
+		FullyQualifiedModule: "github.com/Maar-io/firehose-astar",
 		Version:              version,
 
 		Protocol:        "ACM",

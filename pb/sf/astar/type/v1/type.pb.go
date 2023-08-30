@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.27.0
 // 	protoc        v3.21.12
-// source: sf/acme/type/v1/type.proto
+// source: sf/astar/type/v1/type.proto
 
 package pbacme
 
@@ -426,18 +426,18 @@ func file_sf_acme_type_v1_type_proto_rawDescGZIP() []byte {
 
 var file_sf_acme_type_v1_type_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_sf_acme_type_v1_type_proto_goTypes = []interface{}{
-	(*Block)(nil),       // 0: sf.acme.type.v1.Block
-	(*Transaction)(nil), // 1: sf.acme.type.v1.Transaction
-	(*Event)(nil),       // 2: sf.acme.type.v1.Event
-	(*Attribute)(nil),   // 3: sf.acme.type.v1.Attribute
-	(*BigInt)(nil),      // 4: sf.acme.type.v1.BigInt
+	(*Block)(nil),       // 0: sf.astar.type.v1.Block
+	(*Transaction)(nil), // 1: sf.astar.type.v1.Transaction
+	(*Event)(nil),       // 2: sf.astar.type.v1.Event
+	(*Attribute)(nil),   // 3: sf.astar.type.v1.Attribute
+	(*BigInt)(nil),      // 4: sf.astar.type.v1.BigInt
 }
 var file_sf_acme_type_v1_type_proto_depIdxs = []int32{
-	1, // 0: sf.acme.type.v1.Block.transactions:type_name -> sf.acme.type.v1.Transaction
-	4, // 1: sf.acme.type.v1.Transaction.amount:type_name -> sf.acme.type.v1.BigInt
-	4, // 2: sf.acme.type.v1.Transaction.fee:type_name -> sf.acme.type.v1.BigInt
-	2, // 3: sf.acme.type.v1.Transaction.events:type_name -> sf.acme.type.v1.Event
-	3, // 4: sf.acme.type.v1.Event.attributes:type_name -> sf.acme.type.v1.Attribute
+	1, // 0: sf.astar.type.v1.Block.transactions:type_name -> sf.astar.type.v1.Transaction
+	4, // 1: sf.astar.type.v1.Transaction.amount:type_name -> sf.astar.type.v1.BigInt
+	4, // 2: sf.astar.type.v1.Transaction.fee:type_name -> sf.astar.type.v1.BigInt
+	2, // 3: sf.astar.type.v1.Transaction.events:type_name -> sf.astar.type.v1.Event
+	3, // 4: sf.astar.type.v1.Event.attributes:type_name -> sf.astar.type.v1.Attribute
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

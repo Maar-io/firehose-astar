@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
+	pbacme "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
 	"github.com/streamingfast/bstream"
-	pbacme "github.com/streamingfast/firehose-acme/pb/sf/acme/type/v1"
 	firecore "github.com/streamingfast/firehose-core"
 	"github.com/streamingfast/logging"
 	"github.com/streamingfast/node-manager/mindreader"

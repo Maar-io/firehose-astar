@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 
+	pbacme "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
 	"github.com/streamingfast/bstream"
-	pbacme "github.com/streamingfast/firehose-acme/pb/sf/acme/type/v1"
 )
 
 func printBlock(blk *bstream.Block, alsoPrintTransactions bool, out io.Writer) error {
