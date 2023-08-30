@@ -4,7 +4,7 @@
          /_/ /_/_/  \__/_//_/\___/___/\__/
 
 Welcome to this Firehose chain reader pod, common commands:
- - Show version                       fireacme --version
+ - Show version                       fireastar --version
 
 Node manager commands (astar-... <tab> to show all):
  - Check if running                   reader-is-running

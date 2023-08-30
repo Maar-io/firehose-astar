@@ -2,12 +2,12 @@ package main
 
 import (
 	"github.com/Maar-io/firehose-astar/codec"
-	pbacme "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
+	pbastar "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
 	firecore "github.com/streamingfast/firehose-core"
 )
 
 func main() {
-	firecore.Main(&firecore.Chain[*pbacme.Block]{
+	firecore.Main(&firecore.Chain[*pbastar.Block]{
 		ShortName:            "astar",
 		LongName:             "Astar",
 		ExecutableName:       "dummy-blockchain",
@@ -19,10 +19,10 @@ func main() {
 
 		FirstStreamableBlock: 1,
 
-		BlockFactory:         func() firecore.Block { return new(pbacme.Block) },
+		BlockFactory:         func() firecore.Block { return new(pbastar.Block) },
 		ConsoleReaderFactory: codec.NewConsoleReader,
 
-		Tools: &firecore.ToolsConfig[*pbacme.Block]{
+		Tools: &firecore.ToolsConfig[*pbastar.Block]{
 			BlockPrinter: printBlock,
 		},
 	})

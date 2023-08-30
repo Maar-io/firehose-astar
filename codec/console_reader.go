@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	pbacme "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
+	pbastar "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
 	"github.com/streamingfast/bstream"
 	firecore "github.com/streamingfast/firehose-core"
 	"github.com/streamingfast/logging"
@@ -86,7 +86,7 @@ func (s *parsingStats) inc(key string) {
 }
 
 type parseCtx struct {
-	currentBlock *pbacme.Block
+	currentBlock *pbastar.Block
 	stats        *parsingStats
 
 	logger *zap.Logger
@@ -94,9 +94,9 @@ type parseCtx struct {
 
 func newContext(logger *zap.Logger, height uint64) *parseCtx {
 	return &parseCtx{
-		currentBlock: &pbacme.Block{
+		currentBlock: &pbastar.Block{
 			Height:       height,
-			Transactions: []*pbacme.Transaction{},
+			Transactions: []*pbastar.Transaction{},
 		},
 		stats: newParsingStats(logger, height),
 
@@ -104,7 +104,7 @@ func newContext(logger *zap.Logger, height uint64) *parseCtx {
 	}
 }
 
-func (r *ConsoleReader) readBlock() (out *pbacme.Block, err error) {
+func (r *ConsoleReader) readBlock() (out *pbastar.Block, err error) {
 	block, err := r.next()
 	if err != nil {
 		return nil, err
@@ -132,7 +132,7 @@ const (
 	LogEndBlock   = "BLOCK_END"
 )
 
-func (r *ConsoleReader) next() (out *pbacme.Block, err error) {
+func (r *ConsoleReader) next() (out *pbastar.Block, err error) {
 	for line := range r.lines {
 		if !strings.HasPrefix(line, LogPrefix) {
 			continue
@@ -228,26 +228,26 @@ func (ctx *parseCtx) trxBegin(params []string) error {
 		return fmt.Errorf("did not process a BLOCK_BEGIN")
 	}
 
-	trx := &pbacme.Transaction{
+	trx := &pbastar.Transaction{
 		Type:     params[1],
 		Hash:     params[0],
 		Sender:   params[2],
 		Receiver: params[3],
 		Success:  params[6] == "true",
-		Events:   []*pbacme.Event{},
+		Events:   []*pbastar.Event{},
 	}
 
 	v, ok := new(big.Int).SetString(params[4], 16)
 	if !ok {
 		return fmt.Errorf("unable to parse trx amount %s", params[4])
 	}
-	trx.Amount = &pbacme.BigInt{Bytes: v.Bytes()}
+	trx.Amount = &pbastar.BigInt{Bytes: v.Bytes()}
 
 	v, ok = new(big.Int).SetString(params[5], 16)
 	if !ok {
 		return fmt.Errorf("unable to parse trx amount %s", params[4])
 	}
-	trx.Fee = &pbacme.BigInt{Bytes: v.Bytes()}
+	trx.Fee = &pbastar.BigInt{Bytes: v.Bytes()}
 
 	ctx.currentBlock.Transactions = append(ctx.currentBlock.Transactions, trx)
 	return nil
@@ -272,9 +272,9 @@ func (ctx *parseCtx) eventBegin(params []string) error {
 		return fmt.Errorf("last transaction hash %q does not match the event trx hash %q", trx.Hash, params[0])
 	}
 
-	trx.Events = append(trx.Events, &pbacme.Event{
+	trx.Events = append(trx.Events, &pbastar.Event{
 		Type:       params[1],
-		Attributes: []*pbacme.Attribute{},
+		Attributes: []*pbastar.Attribute{},
 	})
 
 	ctx.currentBlock.Transactions[len(ctx.currentBlock.Transactions)-1] = trx
@@ -308,7 +308,7 @@ func (ctx *parseCtx) eventAttr(params []string) error {
 		return fmt.Errorf("length of events array does not match event index: %d", eventIndex)
 	}
 	event := trx.Events[eventIndex]
-	event.Attributes = append(event.Attributes, &pbacme.Attribute{
+	event.Attributes = append(event.Attributes, &pbastar.Attribute{
 		Key:   params[2],
 		Value: params[3],
 	})
@@ -319,7 +319,7 @@ func (ctx *parseCtx) eventAttr(params []string) error {
 
 // Format:
 // FIRE BLOCK_END <HEIGHT> <HASH> <PREV_HASH> <TIMESTAMP> <TRX-COUNT>
-func (ctx *parseCtx) readBlockEnd(params []string) (*pbacme.Block, error) {
+func (ctx *parseCtx) readBlockEnd(params []string) (*pbastar.Block, error) {
 	if err := validateChunk(params, 5); err != nil {
 		return nil, fmt.Errorf("invalid log line length: %w", err)
 	}

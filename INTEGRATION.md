@@ -71,12 +71,12 @@ modify the flag `reader-node-path: "dummy-blockchain"` to point to the path of y
 
 *all subsequent commands are run from the `devel/standard/` directory*
 
-Start `fireacme`
+Start `fireastar`
 ```bash
 ./start.sh
 ```
 
-This will launch `fireacme` application. Behind the scenes we are starting 3 sub processes: `reader-node`, `relayer`, `firehose`
+This will launch `fireastar` application. Behind the scenes we are starting 3 sub processes: `reader-node`, `relayer`, `firehose`
 
 *reader-node*
 
@@ -105,7 +105,7 @@ ls -las ./firehose-data/storage/merged-blocks
 We have also built tools that allow you to introspect block files:
 
 ```bash
-go install ../../cmd/fireacme && fireacme tools print blocks --store ./firehose-data/storage/merged-blocks 100
+go install ../../cmd/fireastar && fireastar tools print blocks --store ./firehose-data/storage/merged-blocks 100
 ```
 
 At this point we have `reader-node` process running as well a `relayer` & `firehose` process. Both of these processes work together to provide the Firehose data stream.
@@ -126,7 +126,7 @@ grpcurl -plaintext -d '{"start_block_num": 10}' -import-path ./proto -proto sf/a
 One of the main reason we provide a `firehose-astar` repository is to act as a template element that integrators can use to bootstrap
 creating the required Firehose chain specific code.
 
-We purposely used `Astar` (and also `astar` and `ACME`) throughout this repository so that integrators can simply copy everything and perform
+We purposely used `Astar` (and also `astar` and `ASTAR`) throughout this repository so that integrators can simply copy everything and perform
 a global search/replace of this word and use their chain name instead.
 
 As well as this, there is a few files that requires a renaming. Would will find below the instructions to properly make the search/replace
@@ -169,10 +169,10 @@ Perform a **case-sensitive** search/replace for the following terms, order is im
 - `github.com/streamingfast/firehose-astar` -> `github.com/<owner>/firehose-<chain>`
 - `ghcr.io/streamingfast/firehose-astar` -> `ghcr.io/<owner>/firehose-<chain>`
 - `owner: streamingfast` -> `owner: <owner>`
-- `fireacme` -> `fire<chain_short>` (for the final binary produced)
+- `fireastar` -> `fire<chain_short>` (for the final binary produced)
 - `astar` -> `<chain>` (for variable, identifier and other place not meant for display, `camelCase`)
 - `Astar` -> `<Chain>` (for title(s) and display of chain's full name, `titleCase`)
-- `ACME` -> `<CHAIN>` (for constants)
+- `ASTAR` -> `<CHAIN>` (for constants)
 
 > **Note** Don't forget to change `<chain>` (and their variants) by the name of your exact chain like `ethereum` so it would become `ethereum`, `Ethereum` and `ETHEREUM` respectively. The `<chain_short>` should be a shorter version if `<chain>` if you find it too long or have a known short version of it. For example, `ethereum` `<chain_short>` is actually `eth` while `NEAR` chain is the same as `<chain>` so `near`. The `<owner>` value needs to be replaced by GitHub organisation/user that is going to host the `firehose-<chain>` repository, for example if `firehose-ethereum` is going to be hosted at `github.com/ethereum-core/firehose-ethereum`, the `<owner>` here would be `ethereum-core`.
 
@@ -191,10 +191,10 @@ find . -type f -not -path "./.git/*" -exec sd -f c "github.com/streamingfast/fir
 find . -type f -not -path "./.git/*" -exec sd -f c "ghcr.io/streamingfast/firehose-astar" "ghcr.io/$owner/firehose-$chain" {} \;`
 find . -type f -not -path "./.git/*" -exec sd -f c "buf.build/streamingfast/firehose-astar" "buf.build/$owner/firehose-$chain" {} \;`
 find . -type f -not -path "./.git/*" -exec sd -f c "owner: streamingfast" "owner: $owner" {} \;`
-find . -type f -not -path "./.git/*" -exec sd -f c fireacme fire$chain_short {} \;`
+find . -type f -not -path "./.git/*" -exec sd -f c fireastar fire$chain_short {} \;`
 find . -type f -not -path "./.git/*" -exec sd -f c astar $owner {} \;`
 find . -type f -not -path "./.git/*" -exec sd -f c Astar $chain_title {} \;`
-find . -type f -not -path "./.git/*" -exec sd -f c ACME $chain_constant {} \;`
+find . -type f -not -path "./.git/*" -exec sd -f c ASTAR $chain_constant {} \;`
 
 ```
 
@@ -203,8 +203,8 @@ find . -type f -not -path "./.git/*" -exec sd -f c ACME $chain_constant {} \;`
 ### Files
 
 ```
-git mv ./devel/fireacme ./devel/fireeth
-git mv ./cmd/fireacme ./cmd/fireeth
+git mv ./devel/fireastar ./devel/fireeth
+git mv ./cmd/fireastar ./cmd/fireeth
 git mv ./pb/sf/astar ./pb/sf/ethereum
 git mv ./proto/sf/astar ./proto/sf/ethereum
 ```
@@ -253,7 +253,7 @@ Now the main module has its `types` dependency updated with the newly generated 
 
 Doing a Firehose integration means there is an instrumented node that emits Firehose logs (or if not a node directly, definitely a process that reads and emits Firehose logs).
 
-#### [cmd/fireacme/cli/constants.go](cmd/fireacme/cli/constants.go)
+#### [cmd/fireastar/cli/constants.go](cmd/fireastar/cli/constants.go)
 
 - Replace `ChainExecutableName = "dummy-blockchain"` by the `ChainExecutableName = "<binary>"` where `<binary>` is the node's binary name that should be launched.
 
@@ -264,7 +264,7 @@ Doing a Firehose integration means there is an instrumented node that emits Fire
 
 ### Dockerfile(s) & GitHub Actions
 
-There is two Docker image created by a build of `firehose-astar`. First, a version described as _vanilla_ where only `fireacme` Golang binary is included and another one described as _bundle_ which includes both the `firacme` binary and the chain's binary that `reader-node` launches.
+There is two Docker image created by a build of `firehose-astar`. First, a version described as _vanilla_ where only `fireastar` Golang binary is included and another one described as _bundle_ which includes both the `fireastar` binary and the chain's binary that `reader-node` launches.
 
 Here the files that needs to be modified for this. The Dockerfile are all built on Ubuntu 20.04 images.
 

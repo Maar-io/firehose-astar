@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"io"
 
-	pbacme "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
+	pbastar "github.com/Maar-io/firehose-astar/pb/sf/astar/type/v1"
 	"github.com/streamingfast/bstream"
 )
 
 func printBlock(blk *bstream.Block, alsoPrintTransactions bool, out io.Writer) error {
-	block := blk.ToProtocol().(*pbacme.Block)
+	block := blk.ToProtocol().(*pbastar.Block)
 
 	if _, err := fmt.Fprintf(out, "Block #%d (%s) (prev: %s): %d transactions\n",
 		block.Height,

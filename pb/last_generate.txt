@@ -1,2 +1,2 @@
-generate.sh - Mon Apr 24 11:26:46 EDT 2023 - maoueh
-streamingfast/firehose-astar/proto revision: 37870a5
+generate.sh - Wed Aug 30 15:20:32 CEST 2023 - mario
+streamingfast/firehose-astar/proto revision: 63c9d59

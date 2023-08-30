@@ -13,18 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd ../.. && pwd )"
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+printf "ROOT: $ROOT\n"
 
 # Protobuf definitions
-PROTO_ACME=${2:-"$ROOT/proto"}
+PROTO_ASTAR=${2:-"$ROOT/proto"}
+printf "PROTO_ASTAR: $PROTO_ASTAR\n"
 
 function main() {
   checks
 
   set -e
-  cd "$ROOT/types/pb" &> /dev/null
+  cd "$ROOT/pb" &> /dev/null
+  printf "PWD: `pwd`\n"
 
   generate "sf/astar/type/v1/type.proto"
+  printf "Generated sf/astar/type/v1/type.proto\n"
 
   echo "generate.sh - `date` - `whoami`" > ./last_generate.txt
   echo "streamingfast/firehose-astar/proto revision: `GIT_DIR=$ROOT/.git git log -n 1 --pretty=format:%h -- proto`" >> ./last_generate.txt
@@ -40,7 +44,7 @@ function generate() {
     fi
 
     for file in "$@"; do
-      protoc -I$PROTO_ACME \
+      protoc -I$PROTO_ASTAR \
         --go_out=. --go_opt=paths=source_relative \
         --go-grpc_out=. --go-grpc_opt=paths=source_relative,require_unimplemented_servers=false \
          $base$file
